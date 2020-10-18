@@ -3,6 +3,7 @@ import { DynamoDB } from "aws-sdk";
 import * as AWSMock from "aws-sdk-mock";
 import Alias, { AliasData } from "../../../lib/models/Alias";
 import generateAliasValue from "../../../lib/models/generateAliasValue";
+import mockAWS from "../../utils/mockAWS";
 
 jest.mock("../../../lib/models/generateAliasValue");
 
@@ -10,9 +11,6 @@ type Callback = (err: any, data: any) => void;
 
 describe("Test aliasExists", () => {
   beforeEach(() => {
-    // Fix: https://github.com/dwyl/aws-sdk-mock/issues/145
-    AWSMock.setSDK(path.resolve(__dirname, "../../../node_modules/aws-sdk"));
-
     AWSMock.mock(
       "DynamoDB.DocumentClient",
       "get",
@@ -74,11 +72,6 @@ describe("Test generateAlias", () => {
 describe("Test getAllAliases", () => {
   afterAll(() => {
     jest.restoreAllMocks();
-  });
-
-  beforeEach(() => {
-    // Fix: https://github.com/dwyl/aws-sdk-mock/issues/145
-    AWSMock.setSDK(path.resolve(__dirname, "../../../node_modules/aws-sdk"));
   });
 
   afterEach(() => {
@@ -202,11 +195,6 @@ describe("Test putAlias", () => {
     jest.restoreAllMocks();
   });
 
-  beforeEach(() => {
-    // Fix: https://github.com/dwyl/aws-sdk-mock/issues/145
-    AWSMock.setSDK(path.resolve(__dirname, "../../../node_modules/aws-sdk"));
-  });
-
   afterEach(() => {
     AWSMock.restore();
   });
@@ -251,9 +239,6 @@ describe("Test putAlias", () => {
 
 describe("Test didReceiveEmail and didSendEmail", () => {
   beforeEach(() => {
-    // Fix: https://github.com/dwyl/aws-sdk-mock/issues/145
-    AWSMock.setSDK(path.resolve(__dirname, "../../../node_modules/aws-sdk"));
-
     AWSMock.mock(
       "DynamoDB.DocumentClient",
       "get",
